@@ -1,11 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Asynchronus Javascript And XML</title>
+
 </head>
+
 <body>
-    
+    <button onclick="getDataFromAPI()">Get Data From API</button>
+    <script>
+        // Will excute line after line - Syncronos Excution.
+        // Parallel Excutinon is Called Aynchronos Excution.
+        // Application Programming Interface
+        // http://www.filltext.com/?rows=5&fname={firstName}&lname={lastName}&pretty=true
+
+        // XMLHttpRequest is a Built in Class In Javascript
+        function getDataFromAPI() {
+            //Creating a Instance of XMLHttpRequest
+            var getData = new XMLHttpRequest();
+            getData.onreadystatechange = function () {
+                if (getData.readyState == 4 && getData.status == 200) {
+                    console.log(JSON.parse(getData.response))
+                }
+            }
+            getData.open("GET", "http://www.filltext.com/?rows=5&fname={firstName}&lname={lastName}&pretty=true")
+            getData.send()
+        }
+    </script>
 </body>
+
 </html>
