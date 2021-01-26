@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 1. We have to Capture Data From a HTML Form -->
+    <form>
+        <label for="fname">First Name :</label>
+        <input type="text" name="" id="fname"> <br>
+        <label for="lname">Last Name :</label>
+        <input type="text" name="" id="lname"> <br>
+        <button onclick="addUser()" type="button">Add User</button>
+        <button onclick="updateUser()" type="button">Update User</button>
+    </form>
+    <hr>
+    <ul></ul>
+    <script>
+        var users = []
+        function addUser() {
+            // We need to Get the Value from HTML Form
+            // var fname = document.getElementById("fname").value;
+            // var lname = document.getElementById("lname").value
+
+            var user = {
+                fname: document.getElementById("fname").value,
+                lname: document.getElementById("lname").value
+            }
+
+            postUserToServer(user)
+        }
+        function postUserToServer(user) {
+            var getData = new XMLHttpRequest();
+            getData.onreadystatechange = function () {
+                if (getData.readyState == 4 && getData.status == 201) {
+                    getAllUsersFromServer()
+                }
+            }
+            getData.open("POST", "http://localhost:3000/users");
+            getData.setRequestHeader("content-type", "application/json")
+            getData.send(JSON.stringify(user));
+        }
+
+        function getAllUsersFromServer() {
+            var getData = new XMLHttpRequest();
+            getData.onreadystatechange = function () {
+                if (getData.readyState == 4 && getData.status == 200) {
+                    users = JSON.parse(getData.response)
+                    displayAllUsers(users)
+                }
+            }
+            getData.open("GET", "http://localhost:3000/users")
+            getData.send()
+        }
+        // Getting All Users From Server
+        getAllUsersFromServer()
+
+        function displayAllUsers(users) {
+            document.querySelector("ul").innerHTML = ""
+            users.forEach((user, i) => {
+                var li = document.createElement("li")
+                li.innerHTML = user.fname + " <button onclick='editUser(" + i + ")'>Edit</button><button onclick='deleteUser(" + user.id + ")'>Delete</button>"
+                document.querySelector("ul").appendChild(li)
+            })
+        }
+        var newObj = {}
+
+        function editUser(i) {
+            newObj = users[i];
+            for (a in newObj) {
+                document.getElementById(a).value = newObj[a]
+            }
+        }
+        function deleteUser(id) {
+            var getData = new XMLHttpRequest();
+            getData.onreadystatechange = function () {
+                if (getData.readyState == 4 && getData.status == 200) {
+                    getAllUsersFromServer()
+                }
+            }
+            getData.open("DELETE", "http://localhost:3000/users/" + id)
+            getData.send()
+        }
+
+        function updateUser() {
+            for (a in newObj) {
+                if (a !== "id") {
+                    newObj[a] = document.getElementById(a).value
+
+                }
+            }
+            var getData = new XMLHttpRequest();
+            getData.onreadystatechange = function () {
+                if (getData.readyState == 4 && getData.status == 200) {
+                    getAllUsersFromServer()
+                }
+            }
+            getData.open("PUT", "http://localhost:3000/users/" + newObj.id)
+            getData.setRequestHeader("content-type", "application/json")
+            getData.send(JSON.stringify(newObj));
+        }
+    </script>
+</body>
+
+</html>
