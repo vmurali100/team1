@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // Literl way Of Creating Object
+        var person = {
+            fname: "Murali",
+            lname: "Krishna"
+        }
+
+        // Object Oriented Programming
+        // Constructor Function
+        function Person(fname, lname) {
+            this.fname = fname;
+            this.lname = lname;
+
+            this.personDetails = function (users) {
+                console.log(users)
+            }
+        }
+
+
+        var person1 = new Person("Ram", "Kumar")
+        // person1.personDetails()
+
+        // console.log(person1.personDetails.call({ fname: "Hemanth", lname: "Kumar" })
+        // )
+        console.log(person1.personDetails.apply(["Ram", "Krishna", "Ravi"]))
+        console.log(person1)
+
+        class Employee {
+            constructor(empName, empId) {
+                this.empName = empName;
+                this.empId = empId
+            }
+
+        }
+
+
+        var emp1 = new Employee("Ravi", 001)
+        console.log(emp1)
+    </script>
+</body>
+
+</html>

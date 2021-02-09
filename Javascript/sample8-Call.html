@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        // function personContainer() {
+        //     var person = {
+        //         name: "James Smith",
+        //         hello: function () {
+        //             console.log(arguments[0][0])
+        //             console.log(this.name + " says hello " + arguments[0][0]);
+        //         }
+        //     }
+        //     var newInfo = person.hello.bind(person, arguments);
+        //     newInfo()
+        // }
+        // personContainer("World")
+
+        // function personContainer() {
+        //     var person = {
+        //         name: "James Smith",
+        //         hello: function () {
+        //             console.log(arguments.length)
+        //             console.log(this.name + " says hello " + arguments[1]);
+        //         }
+        //     }
+        //     person.hello.apply(person, arguments);
+        // }
+        // personContainer("World", "Gglobe", "Universe")
+        // person.hello("world");  // output: "James Smith says hello world"
+        // console.log(person.hello.apply(person, allValue)) // output: "Jim Smith says hello world"
+
+
+        var person = {
+            name: "James Smith",
+            hello: function (thing) {
+                console.log(this.name + " says hello " + thing);
+            }
+        }
+
+        // person.hello("world");  // output: "James Smith says hello world"
+        var info = person.hello.bind({ name: "Jim Smith" }, "world"); // output: "Jim Smith says hello world"
+        info()
+        // var person = {
+        //     name: "James Smith",
+        //     hello: function (thing) {
+        //         console.log(this.name + " says hello " + thing);
+        //     }
+        // }
+
+        // person.hello("world");  // output: "James Smith says hello world"
+        // person.hello.call({ name: "Jim Smith" }, "world"); // output: "Jim Smith says hello world"
+    </script>
+</body>
+
+</html>

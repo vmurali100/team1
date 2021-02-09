@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul></ul>
+    <script>
+        var users = []
+        function gettingDataFromServer(displayAllUsers) {
+            //it will take some time to get the data 
+            var getData = new XMLHttpRequest();
+            getData.onreadystatechange = function () {
+                if (getData.readyState == 4 && getData.status == 200) {
+                    users = JSON.parse(getData.response)
+                    displayAllUsers()
+                }
+            }
+            getData.open("GET", "http://localhost:3000/users")
+            getData.send()
+
+        }
+
+        function displayAllUsers() {
+            // this function will display all users
+            document.querySelector("ul").innerHTML = ""
+            users.forEach((user, i) => {
+                var li = document.createElement("li")
+                li.innerHTML = user.fname + " <button onclick='editUser(" + i + ")'>Edit</button><button onclick='deleteUser(" + user.id + ")'>Delete</button>"
+                document.querySelector("ul").appendChild(li)
+            })
+        }
+
+        gettingDataFromServer(displayAllUsers)
+        // displayAllUsers()
+
+
+
+        // // 1. Call back
+
+        // gettingBall()// it will take time
+        // // 2. Asycn & await
+        // // 3. Promise
+
+
+        // function gettingBall(playingMatch) {
+        //     // it might take 2min
+        //     // After getting the ball
+        //     playingMatch()
+        // }
+
+        // function playingMatch() {
+
+        // }
+    </script>
+</body>
+
+</html>
