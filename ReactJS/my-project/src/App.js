@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './App.css';
 import Hemanth from './Hemanth';
 import { Parent } from './Parent';
+import { Users } from './Users';
 
 function App() {
   const [age, setage] = useState(25);
@@ -12,7 +13,8 @@ function App() {
   return (
     <div className="App">
       {/* <Hemanth age={age} changeAgeFunc={changeAge} users={users} /> */}
-      <Parent />
+      {/* <Parent /> */}
+      <Users />
     </div>
   );
 }

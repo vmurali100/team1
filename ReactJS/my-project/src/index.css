@@ -11,3 +11,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.userDetails {
+  width: 300px;
+  background: grey;
+  color: white;
+  margin-top: 5px;
+}
+table{
+  width: 100%;
+  text-align: left;
+}
