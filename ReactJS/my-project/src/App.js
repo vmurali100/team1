@@ -16,7 +16,8 @@ function App() {
       {/* <Hemanth age={age} changeAgeFunc={changeAge} users={users} /> */}
       {/* <Parent /> */}
       {/* <Users /> */}
-      <UserForm />
+      {/* <UserForm /> */}
+      <Users />
     </div>
   );
 }
