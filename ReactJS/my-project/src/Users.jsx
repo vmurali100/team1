@@ -6,7 +6,6 @@ export const Users = () => {
     useEffect(() => {
         let url = "http://www.filltext.com/?rows=10&fname={firstName}&lname={lastName}&tel={phone|format}&address={streetAddress}&city={city}&state={usState|abbr}&zip={zip}&pretty=true"
         axios.get(url).then(res => {
-            console.log(res.data)
             setallUsers(res.data)
         })
     }, [])
