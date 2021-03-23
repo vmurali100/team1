@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './App.css';
 import { Employee } from './Employee';
 import Hemanth from './Hemanth';
+import { Jobs } from './Jobs';
 import { Parent } from './Parent';
 import { UserForm } from './UserForm';
 import { Users } from './Users';
@@ -14,12 +15,7 @@ function App() {
   }
   return (
     <div className="App">
-      {/* <Hemanth age={age} changeAgeFunc={changeAge} users={users} /> */}
-      {/* <Parent /> */}
-      {/* <Users /> */}
-      {/* <UserForm /> */}
-      {/* <Users /> */}
-      <Employee />
+      <Jobs />
     </div>
   );
 }
