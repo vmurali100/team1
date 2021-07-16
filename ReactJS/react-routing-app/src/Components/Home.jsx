@@ -1,9 +1,11 @@
 import React from 'react'
+import LifeCycleA from '../LifeCycles/LifeCycleA'
 
 export const Home = () => {
     return (
         <div>
             <h2>Welcome to Home Component</h2>
+            <LifeCycleA />
         </div>
     )
 }
