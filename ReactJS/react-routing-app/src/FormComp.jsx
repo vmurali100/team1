@@ -2,16 +2,35 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 
 export const FormComp = () => {
-    const [user, setuser] = useState({ gender: '', subjects: [] })
+    const [genderValues, setgenderValues] = useState([{
+        value: 'Male',
+        checked: false
+    },
+    {
+        value: 'Female',
+        checked: false
+    }
+    ])
+    const [user, setuser] = useState({
+        gender: {
+            value: '',
+            checked: false
+        }, subjects: []
+    })
     const [users, setUsers] = useState([])
 
     useEffect(() => {
         getUsers()
     }, [])
     const handleChange = (e) => {
-        let newUser = { ...user };
-        newUser[e.target.name] = e.target.value
-        setuser(newUser)
+        let allGenderValue = [...genderValues];
+        resetGenderValues()
+        allGenderValue.forEach(gValue => {
+            if (gValue.value == e.target.value) {
+                gValue.checked = true
+            }
+        })
+        setgenderValues(allGenderValue)
     }
 
     const handleCheckBox = (e) => {
@@ -33,10 +52,17 @@ export const FormComp = () => {
     }
 
     const handleSubmit = () => {
-        console.log(user)
-        axios.post(" http://localhost:3000/users", user).then(res => {
+        let newUser = { ...user }
+        genderValues.forEach((gender => {
+            if (gender.checked) {
+                newUser.gender = gender
+            }
+        }))
+
+        axios.post(" http://localhost:3000/users", newUser).then(res => {
             console.log("User Added Successfully")
             getUsers()
+            resetGenderValues()
         })
     }
 
@@ -53,15 +79,35 @@ export const FormComp = () => {
         })
     }
 
+    const resetGenderValues = () => {
+        let allGenderValue = [...genderValues];
+        allGenderValue.forEach(gender => {
+            gender.checked = false
+        })
+        setgenderValues(allGenderValue)
+    }
     const handleEdit = (user) => {
+        resetGenderValues()
+        let allGenderValue = [...genderValues];
+        allGenderValue.forEach(gender => {
+            if (gender.value == user.gender) {
+                gender.checked = true
+            }
+        })
+        setgenderValues(allGenderValue)
         setuser(user)
     }
     return (
-        <div>
+        <div className="container">
             <form>
                 <label htmlFor="gender">Gender</label> <br />
-                <input type="radio" name="gender" id="" value="Male" onChange={(e) => { handleChange(e) }} />Male
-                <input type="radio" name="gender" id="" value="Female" onChange={(e) => { handleChange(e) }} />Female
+                {genderValues.map((gender) => {
+                    return <>
+                        <input type="radio" checked={gender.checked} name="gender" value={gender.value} onChange={(e) => { handleChange(e) }} />
+                        <span>{gender.value}</span>
+                    </>
+
+                })}
                 <br /><br />
                 <label htmlFor="subject">Subject</label> <br />
 
@@ -85,7 +131,7 @@ export const FormComp = () => {
                 <tbody>
                     {users.map((user, i) => <tr>
                         <td>{i + 1}</td>
-                        <td>{user.gender}</td>
+                        <td>{user.gender.value}</td>
                         <td>{user.subjects}</td>
                         <td><button className="btn btn-warning" onClick={() => { handleEdit(user) }}>Edit</button></td>
                         <td><button className="btn btn-danger" onClick={() => { handleDelete(user) }}>Delete</button></td>
