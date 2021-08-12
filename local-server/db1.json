@@ -6,51 +6,42 @@
         "checked": true
       },
       "subjects": [
-        "HTML",
-        "CSS"
-      ],
-      "id": 1
-    },
-    {
-      "gender": {
-        "value": "Female",
-        "checked": true
-      },
-      "subjects": [
-        "HTML",
-        "CSS"
-      ],
-      "id": 2
-    },
-    {
-      "gender": {
-        "value": "Female",
-        "checked": true
-      },
-      "subjects": [
-        "CSS"
-      ],
-      "id": 3
-    },
-    {
-      "gender": {
-        "value": "Male",
-        "checked": true
-      },
-      "subjects": [
-        "REACT JS"
-      ],
-      "id": 4
-    },
-    {
-      "gender": {
-        "value": "Male",
-        "checked": true
-      },
-      "subjects": [
-        "REACT JS"
+        {
+          "value": "HTML",
+          "checked": true
+        },
+        {
+          "value": "CSS",
+          "checked": true
+        }
       ],
       "id": 5
+    },
+    {
+      "gender": {
+        "value": "Male",
+        "checked": true
+      },
+      "subjects": [
+        {
+          "value": "HTML",
+          "checked": true
+        }
+      ],
+      "id": 6
+    },
+    {
+      "gender": {
+        "value": "Male",
+        "checked": true
+      },
+      "subjects": [
+        {
+          "value": "HTML",
+          "checked": true
+        }
+      ],
+      "id": 7
     }
   ]
 }
