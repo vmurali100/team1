@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img {
+            width: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="">
+        <label for="title">Title</label>
+        <input type="text" id="title">
+        <br>
+        <br>
+        <label for="category">Category</label>
+        <input type="text" id="category">
+        <br>
+        <br>
+        <label for="description">Description</label>
+        <input type="text" id="description">
+        <br>
+        <br>
+        <label for="image">Image</label>
+        <input type="text" id="image">
+        <br>
+        <br>
+        <label for="price">Price</label>
+        <input type="text" id="price">
+        <br>
+        <br>
+        <label for="rating">Rating</label>
+        <input type="text" id="rating">
+        <br>
+        <br>
+        <button type="button" onclick="updateUser()">Update</button>
+        <br><br><br>
+    </form>
+    <table border="2">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Image</th>
+                <th>Rating</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <script>
+        var users = [];
+        function getData() {
+            return new Promise(function (success, failure) {
+                var getInfo = new XMLHttpRequest();
+                getInfo.onreadystatechange = function () {
+                    if (getInfo.readyState == 4 && getInfo.status == 200) {
+                        users = JSON.parse(getInfo.response);
+                        success(users)
+                    }
+                }
+                getInfo.open("GET", "  http://localhost:3000/users")
+                getInfo.send()
+            })
+        }
+
+        function displayData(users) {
+            for (i = 0; i <= users.length; i++) {
+                var mytr = document.createElement("tr")
+                for (a in users[i]) {
+                    if (a !== "image") {
+                        var mytd = document.createElement("td")
+                        mytd.innerHTML = users[i][a]
+                        mytr.appendChild(mytd)
+                    } else {
+                        var myImg = document.createElement("img")
+                        var mytd1 = document.createElement("td")
+                        myImg.setAttribute("src", users[i][a])
+                        mytd1.appendChild(myImg)
+                        mytr.appendChild(mytd1)
+                    }
+                }
+
+                var editTd = document.createElement("td")
+                var editBtn = document.createElement("button")
+                editBtn.innerHTML = "Edit"
+                editBtn.setAttribute("onclick", "editUser(" + i + ")")
+                editTd.appendChild(editBtn)
+                mytr.appendChild(editTd)
+
+                var deleteTd = document.createElement("td")
+                var deleteBtn = document.createElement("button")
+                deleteBtn.innerHTML = "Delete"
+                deleteBtn.setAttribute("onclick", "deleteUser(" + i + ")")
+                deleteTd.appendChild(deleteBtn)
+                mytr.appendChild(deleteTd)
+
+                document.querySelector("tbody").appendChild(mytr)
+                console.log(users)
+            }
+        }
+
+        function editUser(i) {
+            for (a in users[i]) {
+                document.getElementById(a).value = users[i][a]
+            }
+        }
+
+        function deleteUser(i) {
+            var delInfo = new XMLHttpRequest();
+            delInfo.onreadystatechange = function () {
+                if (delInfo.readyState == 4 && delInfo.status == 200) {
+                    getData()
+                    console.log("user deleted successfully")
+                }
+            }
+            delInfo.open("DELETE", "  http://localhost:3000/users/" + users[i].id)
+            delInfo.send()
+
+        }
+
+        // var newObj = {}
+        function updateUser() {
+
+            var users = {
+                title: "",
+                price: "",
+                description: "",
+                category: "",
+                image: "",
+                rating: ""
+
+            }
+
+            for (a in users[i]) {
+            
+                 document.getElementById(a).value=users[i][a]
+                
+            }
+            var postinfo = new XMLHttpRequest()
+            postinfo.onreadystatechange = function () {
+                if (postinfo.readyState == 4 && postinfo.status == 201) {
+                    // clearform()
+                    getData()
+                }
+            }
+            postinfo.open("PUT", "http://localhost:3000/users/"+ users.id)
+            postinfo.setRequestHeader("content-type", "application/json")
+            postinfo.send(JSON.stringify(users))
+        }
+
+        async function getNewData() {
+            var users = await getData()
+            displayData(users)
+        }
+
+        getNewData()
+    </script>
+</body>
+
+</html>

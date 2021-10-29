@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <div class="mb-3">
+            <label for="" class="form-label">Id</label> <br>
+            <input class="col-sm-7" type="text" class="form-control" id="id" name="idd" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">Email address</label> <br>
+            <input class="col-sm-7" type="text" class="form-control" id="email" name="email"
+                aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">Username</label> <br>
+            <input class="col-sm-7" type="text" class="form-control" id="username" name="username" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label> <br>
+            <input class="col-sm-7" type="text" name="password" class="form-control" id="password">
+        </div>
+        <!-- <div class="mb-3  form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1" name="Checkexp">
+            <label class="form-check-label" for="Checkexp">Check me out</label>
+        </div> -->
+        <button type="button" class="btn btn-primary" onclick="Updateuser()">Update</button>
+    </form>
+<br><br>
+
+<script>
+    let users = JSON.parse(localStorage.getItem("users"))
+    let url = window.location.href
+    let i = url.substr(url.indexOf('=')+1)
+    let editUser = users[i]
+    for(a in editUser){
+        document.getElementById(a).value = editUser[a]
+    }
+    console.log(editUser)
+
+
+
+    function Updateuser(){
+    var person={
+        id:"",
+        email:"",
+        username:"",
+        password:""
+    }
+    for( a in person){
+         person[a]=document.getElementById(a).value
+    }
+      
+    //  sending user value to users by using index
+     users[i] = person;
+     localStorage.setItem("users",JSON.stringify(users));
+     window.location.href ="Crud.html"
+    console.log(users)
+   
+}
+</script>
+
+</body>
+</html>
